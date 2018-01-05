@@ -65,16 +65,13 @@ void UHealthComponent::RecoverShield(float amount) {
 }
 
 void UHealthComponent::Overcharge(float amount) {
-	if (currentShield < maxShield) {
-		currentShield += amount;
-		if (currentShield > maxShield) {
-			shieldOvercharge = currentShield - maxShield;
-			currentShield = maxShield;
-		}
+	currentShield += amount;
+	if (currentShield > maxShield) {
+		shieldOvercharge += currentShield - maxShield;
+		currentShield = maxShield;
 	}
-	shieldOvercharge += amount;
-	if (shieldOvercharge > maxShield*maxOverchargeMultiplier) {
-		shieldOvercharge = maxShield*maxOverchargeMultiplier;
+	if (shieldOvercharge > GetMaxOvercharge()) {
+		shieldOvercharge = GetMaxOvercharge();
 	}
 	onShieldUpdate.Broadcast();
 }
