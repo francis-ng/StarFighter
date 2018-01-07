@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/PrimitiveComponent.h"
+#include "GameFramework/PawnMovementComponent.h"
 #include "Munition.generated.h"
 
 UCLASS()
@@ -36,8 +37,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float timeToLive = 0.0f;
 	UPROPERTY(EditAnywhere)
-	float modelScale = 1.0f;
-	UPROPERTY(EditAnywhere)
 	FVector initialDirection;
 	UPrimitiveComponent* primitive;
 	// Called when the game starts or when spawned
@@ -45,4 +44,5 @@ protected:
 	void CalculateLifetime(float DeltaTime);
 	virtual void AcquireTarget();
 	virtual void InitializeProjectile();
+	void TurnToDirectionOfMovement();
 };

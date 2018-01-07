@@ -8,14 +8,12 @@ AMunition::AMunition()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 // Called when the game starts or when spawned
 void AMunition::BeginPlay()
 {
 	Super::BeginPlay();
-	SetActorScale3D(FVector(modelScale, modelScale, modelScale));
 }
 
 // Called every frame
@@ -23,6 +21,7 @@ void AMunition::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	CalculateLifetime(DeltaTime);
+	//TurnToDirectionOfMovement();
 }
 
 void AMunition::InitializeProjectile() {
@@ -38,6 +37,11 @@ void AMunition::SetTargetsPlayer(bool isAimed) {
 
 void AMunition::SetInitialDirection(FVector direction) {
 	initialDirection = direction;
+}
+
+void AMunition::TurnToDirectionOfMovement() {
+	FVector velocity = primitive->GetComponentVelocity();
+	SetActorRotation(velocity.ForwardVector.Rotation());
 }
 
 void AMunition::CalculateLifetime(float DeltaTime) {
