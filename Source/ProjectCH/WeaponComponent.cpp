@@ -79,6 +79,7 @@ void UWeaponComponent::InitializeWeapon() {
 
 	if (weaponName.IsEmpty()) {
 		UE_LOG(LogTemp, Error, TEXT("No weapon name on %s"), *GetOwner()->GetName())
+			return;
 	}
 
 	if (!projectile) {
@@ -87,6 +88,10 @@ void UWeaponComponent::InitializeWeapon() {
 	}
 	if (projectileHardpoints.Num() == 0) {
 		UE_LOG(LogTemp, Error, TEXT("No weapon hardpoints %s"), *GetOwner()->GetName())
+			return;
+	}
+	if (!weaponIcon) {
+		UE_LOG(LogTemp, Error, TEXT("No icon for %s"), *GetOwner()->GetName())
 			return;
 	}
 
@@ -116,4 +121,8 @@ FString UWeaponComponent::GetName() const {
 
 int32 UWeaponComponent::GetPriority() const {
 	return weaponPriority;
+}
+
+UTexture2D* UWeaponComponent::GetIcon() const {
+	return weaponIcon;
 }

@@ -6,7 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FHealthUpdateEvent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FHealthUpdateEvent, float, MaxHealth, float, CurrentHealth);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FEnergyUpdateEvent, float, MaxShield, float, CurrentShield, float, MaxOvercharge, float, CurrentOvercharge);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeathEvent);
 
 UENUM(BlueprintType)
@@ -57,7 +58,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FHealthUpdateEvent onHealthUpdate;
 	UPROPERTY(BlueprintAssignable)
-	FHealthUpdateEvent onShieldUpdate;
+	FEnergyUpdateEvent onShieldUpdate;
 	UPROPERTY(BlueprintAssignable)
 	FDeathEvent onDeath;
 

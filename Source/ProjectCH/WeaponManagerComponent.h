@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 #include "WeaponManagerComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWeaponChangedEvent, UTexture2D*, Texture);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTCH_API UWeaponManagerComponent : public UActorComponent
@@ -28,6 +29,8 @@ public:
 	void AcquireWeapon(FString weaponName);
 	UFUNCTION(BlueprintCallable, Category = "WeaponManager")
 	FString GetCurrentWeapon() const;
+	UPROPERTY(BlueprintAssignable)
+	FWeaponChangedEvent onWeaponChanged;
 
 protected:
 	// Called when the game starts

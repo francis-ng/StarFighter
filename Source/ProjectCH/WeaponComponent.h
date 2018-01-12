@@ -30,6 +30,8 @@ public:
 	FString GetName() const;
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	int32 GetPriority() const;
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	UTexture2D* GetIcon() const;
 
 protected:
 	// Called when the game starts
@@ -53,6 +55,8 @@ private:
 	FString hardpointTag = "";
 	UPROPERTY(EditAnywhere)
 	bool targetsPlayer;
+	UPROPERTY(EditDefaultsOnly)
+	UTexture2D* weaponIcon = nullptr;
 	int burstRemaining = 0;
 	float timeleft = 0.0f;
 	float burstTimeLeft = 0.0f;

@@ -63,6 +63,7 @@ void UWeaponManagerComponent::CycleNextWeapon()
 	currentWeaponIndex = (currentWeaponIndex + 1) % numberOfWeapons;
 	if (obtainedWeapons[currentWeaponIndex]) {
 		currentWeapon = *weaponNameIndexMap.Find(currentWeaponIndex);
+		onWeaponChanged.Broadcast(currentWeapon->GetIcon());
 	}
 	else {
 		CycleNextWeapon();
@@ -74,6 +75,7 @@ void UWeaponManagerComponent::CyclePreviousWeapon()
 	currentWeaponIndex = (currentWeaponIndex - 1) < 0 ? numberOfWeapons - 1 : currentWeaponIndex - 1;
 	if (obtainedWeapons[currentWeaponIndex]) {
 		currentWeapon = *weaponNameIndexMap.Find(currentWeaponIndex);
+		onWeaponChanged.Broadcast(currentWeapon->GetIcon());
 	}
 	else {
 		CyclePreviousWeapon();

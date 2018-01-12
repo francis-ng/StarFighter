@@ -38,12 +38,12 @@ void UHealthComponent::DealDamage(float damage) {
 	if (currentShield < 0) {
 		currentHealth += currentShield;
 		currentShield = 0;
-		onHealthUpdate.Broadcast();
+		onHealthUpdate.Broadcast(maxHealth, currentHealth);
 	}
 	if (!IsAlive()) {
 		onDeath.Broadcast();
 	}
-	onShieldUpdate.Broadcast();
+	onShieldUpdate.Broadcast(maxShield, currentShield, GetMaxOvercharge(), shieldOvercharge);
 }
 
 void UHealthComponent::RecoverHealth(float amount) {
@@ -51,7 +51,7 @@ void UHealthComponent::RecoverHealth(float amount) {
 	if (currentHealth > maxHealth) {
 		currentHealth = maxHealth;
 	}
-	onHealthUpdate.Broadcast();
+	onHealthUpdate.Broadcast(maxHealth, currentHealth);
 }
 
 void UHealthComponent::RecoverShield(float amount) {
@@ -60,7 +60,7 @@ void UHealthComponent::RecoverShield(float amount) {
 		if (currentShield > maxShield) {
 			currentShield = maxShield;
 		}
-		onShieldUpdate.Broadcast();
+		onShieldUpdate.Broadcast(maxShield, currentShield, GetMaxOvercharge(), shieldOvercharge);
 	}
 }
 
@@ -73,14 +73,14 @@ void UHealthComponent::Overcharge(float amount) {
 	if (shieldOvercharge > GetMaxOvercharge()) {
 		shieldOvercharge = GetMaxOvercharge();
 	}
-	onShieldUpdate.Broadcast();
+	onShieldUpdate.Broadcast(maxShield, currentShield, GetMaxOvercharge(), shieldOvercharge);
 }
 
 float UHealthComponent::EnergyRelease() {
 	float energyReleased = GetTotalEnergy();
 	currentShield = 0;
 	shieldOvercharge = 0;
-	onShieldUpdate.Broadcast();
+	onShieldUpdate.Broadcast(maxShield, currentShield, GetMaxOvercharge(), shieldOvercharge);
 	return energyReleased;
 }
 
