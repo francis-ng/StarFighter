@@ -49,8 +49,13 @@ void UWeaponManagerComponent::TickComponent(float DeltaTime, ELevelTick TickType
 	// ...
 }
 
-void UWeaponManagerComponent::AcquireWeapon(int32 weaponIndex) {
-	obtainedWeapons[weaponIndex] = true;
+void UWeaponManagerComponent::AcquireWeapon(FString weaponName) {
+	for (auto& pair : weaponNameIndexMap) {
+		if (pair.Value->GetName() == weaponName) {
+			obtainedWeapons[pair.Key] = true;
+			break;
+		}
+	}
 }
 
 void UWeaponManagerComponent::CycleNextWeapon()

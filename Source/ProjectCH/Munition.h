@@ -24,6 +24,8 @@ public:
 	virtual void SetTargetsPlayer(bool isAimed);
 	UFUNCTION(BlueprintCallable, Category = "Munitions")
 	float GetDamage() const;
+	UFUNCTION(BlueprintCallable, Category = "Munitions")
+	float GetWeaponMultiplier() const;
 
 protected:
 	UPROPERTY(EditAnywhere)
@@ -38,6 +40,8 @@ protected:
 	float timeToLive = 0.0f;
 	UPROPERTY(EditAnywhere)
 	FVector initialDirection;
+	UPROPERTY(EditDefaultsOnly)
+	float weaponMultiplier = 1.0f;
 	UPrimitiveComponent* primitive;
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

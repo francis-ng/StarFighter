@@ -34,6 +34,10 @@ public:
 	void StopMoveUp();
 	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
 	void StopMoveDown();
+	UFUNCTION(BlueprintCallable, Category = "ShipScore")
+	float GetBaseScore() const;
+	UFUNCTION(BlueprintCallable, Category = "ShipScore")
+	float GetScoreMultiplier() const;
 
 protected:
 	// Called when the game starts or when spawned
@@ -50,6 +54,18 @@ private:
 	FVector leftDirection = -FVector::RightVector;
 	UPROPERTY(EditAnywhere)
 	FVector rightDirection = FVector::RightVector;
+	UPROPERTY(EditDefaultsOnly)
+	float baseScore = 0.f;
+	UPROPERTY(EditDefaultsOnly)
+	float maxMultiplier = 2.0f;
+	UPROPERTY(EditDefaultsOnly)
+	float decayTime = 5.0f;
+	UPROPERTY(VisibleInstanceOnly)
+	float currentMultiplier; 
+	UPROPERTY(VisibleInstanceOnly)
+	float decayPerSecond;
 	FVector currentMovement = FVector::ZeroVector;
+	void Initialize();
 	void NormalizeMovementVectors();
+	void DecayMultiplier(float DeltaTime);
 };

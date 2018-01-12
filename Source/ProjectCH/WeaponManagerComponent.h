@@ -25,7 +25,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "WeaponManager")
 	void FireCurrentWeapon(bool toFire);
 	UFUNCTION(BlueprintCallable, Category = "WeaponManager")
-	void AcquireWeapon(int32 weaponIndex);
+	void AcquireWeapon(FString weaponName);
 	UFUNCTION(BlueprintCallable, Category = "WeaponManager")
 	FString GetCurrentWeapon() const;
 

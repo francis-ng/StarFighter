@@ -16,6 +16,7 @@ void AShip::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	Initialize();
 	NormalizeMovementVectors();
 }
 
@@ -29,6 +30,12 @@ void AShip::Tick(float DeltaTime)
 		FVector currentLocation = GetActorLocation();
 		SetActorLocation(currentLocation + currentMovement * movementSpeed, true, OUT collisionResult);
 	}
+	DecayMultiplier(DeltaTime);
+}
+
+void AShip::Initialize() {
+	currentMultiplier = maxMultiplier;
+	decayPerSecond = (maxMultiplier - 1) / decayTime;
 }
 
 void AShip::NormalizeMovementVectors() {
@@ -36,6 +43,15 @@ void AShip::NormalizeMovementVectors() {
 	downDirection.Normalize();
 	leftDirection.Normalize();
 	rightDirection.Normalize();
+}
+
+void AShip::DecayMultiplier(float DeltaTime) {
+	if (currentMultiplier > 1) {
+		currentMultiplier -= decayPerSecond * DeltaTime;
+		if (currentMultiplier < 1) {
+			currentMultiplier = 1;
+		}
+	}
 }
 
 void AShip::MoveUp() {
@@ -68,4 +84,12 @@ void AShip::StopMoveLeft() {
 
 void AShip::StopMoveRight() {
 	currentMovement -= rightDirection;
+}
+
+float AShip::GetScoreMultiplier() const {
+	return currentMultiplier;
+}
+
+float AShip::GetBaseScore() const {
+	return baseScore;
 }

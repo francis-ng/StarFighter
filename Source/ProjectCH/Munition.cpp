@@ -60,3 +60,7 @@ void AMunition::AcquireTarget() {
 float AMunition::GetDamage() const {
 	return damage;
 }
+
+float AMunition::GetWeaponMultiplier() const {
+	return weaponMultiplier;
+}

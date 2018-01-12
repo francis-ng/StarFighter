@@ -23,4 +23,25 @@ void APlayerShip::SetupPlayerInputComponent(UInputComponent* InputComponent) {
 
 void APlayerShip::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+
+	IncrementNoDamageMultiplier(DeltaTime);
+}
+
+void APlayerShip::IncrementNoDamageMultiplier(float DeltaTime) {
+	timePassed += DeltaTime;
+	if (timePassed >= noDamageMultiplierTimestep) {
+		currentNoDamageMultiplier += noDamageMultiplierIncrement;
+		timePassed = 0;
+		onNoDamageMultiplierUpdate.Broadcast(currentNoDamageMultiplier);
+	}
+}
+
+void APlayerShip::ResetNoDamageMultiplier() {
+	timePassed = 0;
+	currentNoDamageMultiplier = 1;
+	onNoDamageMultiplierUpdate.Broadcast(currentNoDamageMultiplier);
+}
+
+float APlayerShip::GetNoDamageMultiplier() const {
+	return currentNoDamageMultiplier;
 }

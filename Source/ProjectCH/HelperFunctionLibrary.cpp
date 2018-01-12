@@ -12,8 +12,17 @@ void UHelperFunctionLibrary::DealDamage(UObject* WorldContextObject, AMunition* 
 	AShield* shield = Cast<AShield>(hitActor);
 	if (health) {
 		health->DealDamage(sourceActor->GetDamage());
+		APlayerShip* player = Cast<APlayerShip>(hitActor);
+		if (player) {
+			player->ResetNoDamageMultiplier();
+		}
 	}
 	if (shield) {
 		shield->ShieldHit(sourceActor);
 	}
+}
+
+float UHelperFunctionLibrary::CalculateScore(AShip* destroyedShip, float additionalMultiplier) {
+	float shipScore = destroyedShip->GetScoreMultiplier() * destroyedShip->GetBaseScore();
+	return shipScore * additionalMultiplier;
 }
