@@ -26,3 +26,11 @@ float UHelperFunctionLibrary::CalculateScore(AShip* destroyedShip, float additio
 	float shipScore = destroyedShip->GetScoreMultiplier() * destroyedShip->GetBaseScore();
 	return shipScore * additionalMultiplier;
 }
+
+FTimeComponents UHelperFunctionLibrary::GameTimeToTime(float GameTime) {
+	FTimeComponents time;
+	time.minutes = floor(GameTime / 60);
+	time.seconds = floor(GameTime - time.minutes*60);
+	time.milliseconds = floor(fmod(GameTime, 1) * 1000);
+	return time;
+}

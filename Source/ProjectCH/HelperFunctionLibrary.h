@@ -16,6 +16,18 @@
 /**
  * 
  */
+USTRUCT(BlueprintType)
+struct FTimeComponents {
+	GENERATED_USTRUCT_BODY();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game Time")
+	int minutes;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game Time")
+	int seconds;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game Time")
+	int milliseconds;
+};
+
 UCLASS()
 class PROJECTCH_API UHelperFunctionLibrary : public UBlueprintFunctionLibrary
 {
@@ -27,4 +39,6 @@ public:
 	static void DealDamage(UObject* WorldContextObject, AMunition* sourceActor, AActor* hitActor);
 	UFUNCTION(BlueprintCallable, Category = "ScoreHelperFunctions", meta = (WorldContext = "WorldContextObject"))
 	static float CalculateScore(AShip* destroyedShip, float additionalMultiplier = 1.0f);
+	UFUNCTION(BlueprintCallable, Category = "ScoreHelperFunctions", meta = (WorldContext = "WorldContextObject"))
+	static FTimeComponents GameTimeToTime(float GameTime);
 };
