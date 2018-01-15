@@ -25,20 +25,19 @@ void AHomingMissile::InitializeProjectile() {
 	primitive = Cast<UPrimitiveComponent>(GetRootComponent());
 	if (!primitive) {
 		UE_LOG(LogTemp, Error, TEXT("%s primitive cannot be set"), *GetName())
+		return;
 	}
 	primitive->SetPhysicsLinearVelocity(initialDirection * initialSpeed);
+	playerShip = GetWorld()->GetFirstPlayerController()->GetPawn();
+	if (!playerShip) {
+		UE_LOG(LogTemp, Error, TEXT("Player cannot be found"))
+			return;
+	}
 }
 
 void AHomingMissile::AcquireTarget() {
 	if (targetsPlayer) {
-		playerShip = GetWorld()->GetFirstPlayerController()->GetPawn();
-		if (!playerShip) {
-			UE_LOG(LogTemp, Error, TEXT("Player cannot be found"))
-			return;
-		}
-		else {
-			target = playerShip;
-		}
+		target = playerShip;
 	}
 	else {
 		float minDistance = INT32_MAX;

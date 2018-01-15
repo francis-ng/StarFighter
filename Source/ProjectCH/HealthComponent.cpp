@@ -118,11 +118,11 @@ bool UHealthComponent::IsAlive() const {
 
 EDamageLevelEnum UHealthComponent::GetDamageLevel() const {
 	float damagePercentage = currentHealth / maxHealth;
-	if (damagePercentage <= damagedHealthPercentage) {
-		return EDamageLevelEnum::DL_Damaged;
-	}
 	if (damagePercentage <= criticalHealthPercentage) {
 		return EDamageLevelEnum::DL_Critical;
+	}
+	if (damagePercentage <= damagedHealthPercentage) {
+		return EDamageLevelEnum::DL_Damaged;
 	}
 	return EDamageLevelEnum::DL_Healthy;
 }
