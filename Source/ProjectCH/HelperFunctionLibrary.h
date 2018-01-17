@@ -8,6 +8,7 @@
 #include "HealthComponent.h"
 #include "Shield.h"
 #include "PlayerShip.h"
+#include "EngineUtils.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
@@ -35,10 +36,12 @@ class PROJECTCH_API UHelperFunctionLibrary : public UBlueprintFunctionLibrary
 	
 public:
 	UHelperFunctionLibrary(const FObjectInitializer& ObjectInitializer);
-	UFUNCTION(BlueprintCallable, Category = "DamageHelperFunctions", meta=(WorldContext = "WorldContextObject"))
+	UFUNCTION(BlueprintCallable, Category = "DamageHelpers", meta=(WorldContext = "WorldContextObject"))
 	static void DealDamage(UObject* WorldContextObject, AMunition* sourceActor, AActor* hitActor);
-	UFUNCTION(BlueprintCallable, Category = "ScoreHelperFunctions", meta = (WorldContext = "WorldContextObject"))
+	UFUNCTION(BlueprintCallable, Category = "ScoreHelpers", meta = (WorldContext = "WorldContextObject"))
 	static float CalculateScore(AShip* destroyedShip, float additionalMultiplier = 1.0f);
-	UFUNCTION(BlueprintCallable, Category = "ScoreHelperFunctions", meta = (WorldContext = "WorldContextObject"))
+	UFUNCTION(BlueprintCallable, Category = "GameTimeHelpers", meta = (WorldContext = "WorldContextObject"))
 	static FTimeComponents GameTimeToTime(float GameTime);
+	UFUNCTION(BlueprintCallable, Category = "TargetingHelpers", meta = (WorldContext = "WorldContextObject"))
+	static AShip* FindNearestEnemy(UObject* WorldContextObject);
 };
