@@ -8,9 +8,6 @@
 #include "WeaponComponent.h"
 #include "BossAIController.generated.h"
 
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBossMoveEvent, FVector, RelativeMovement, AShip*, ControlledShip);
-
 /// Actions for boss at particular point of time
 /// There should be a first and last instruction buffer of empty instructions in the instruction array
 /// Weapon number is positive to fire, negative to stop firing. Because of that, weapons should be numbered from 1
@@ -43,8 +40,8 @@ public:
 	AShip* GetControlledShip() const;
 	UFUNCTION(BlueprintCallable, Category = "Boss AI Controller")
 	void FireWeapon(int32 weaponNumber, bool toFire) const;
-	UPROPERTY(BlueprintAssignable)
-	FBossMoveEvent moveBoss;
+	UFUNCTION(BlueprintImplementableEvent, Category = "Boss AI Controller")
+	void MoveBoss(FVector RelativeMovement, AShip* ControlledShip);
 	
 private:
 	AShip* controlledShip = nullptr;
@@ -58,6 +55,5 @@ private:
 	void TrackTime(float DeltaTime);
 	void ExecuteInstructions(FBossInstructionData instructions);
 	void ResetInstructionSet();
-	void ExecuteMovement(FVector movement);
 	void ExecuteWeapons(TArray<int32> weaponsToFire);
 };

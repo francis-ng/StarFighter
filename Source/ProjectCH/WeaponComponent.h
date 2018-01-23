@@ -48,7 +48,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	float cooldown = 0.2f;
 	UPROPERTY(EditAnywhere)
-	int burstCount = 1;
+	int32 burstCount = 1;
 	UPROPERTY(EditAnywhere)
 	float burstCooldown = 1;
 	UPROPERTY(EditAnywhere)
@@ -57,7 +57,7 @@ private:
 	bool targetsPlayer;
 	UPROPERTY(EditDefaultsOnly)
 	UTexture2D* weaponIcon = nullptr;
-	int burstRemaining = 0;
+	int32 burstRemaining = 0;
 	float timeleft = 0.0f;
 	float burstTimeLeft = 0.0f;
 	bool isFiring = false;

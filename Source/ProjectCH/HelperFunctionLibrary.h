@@ -22,11 +22,11 @@ struct FTimeComponents {
 	GENERATED_USTRUCT_BODY();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game Time")
-	int minutes;
+	int32 minutes;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game Time")
-	int seconds;
+	int32 seconds;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game Time")
-	int milliseconds;
+	int32 milliseconds;
 };
 
 UCLASS()

@@ -70,13 +70,8 @@ void ABossAIController::TrackTime(float DeltaTime) {
 }
 
 void ABossAIController::ExecuteInstructions(FBossInstructionData instructions) {
-	ExecuteMovement(instructions.RelativeMovement);
+	MoveBoss(instructions.RelativeMovement, controlledShip);
 	ExecuteWeapons(instructions.WeaponsToFire);
-}
-
-/// Using dispatch to take advantage of Timeline and Lerp
-void ABossAIController::ExecuteMovement(FVector movement) {
-	moveBoss.Broadcast(movement, controlledShip);
 }
 
 void ABossAIController::ExecuteWeapons(TArray<int32> weaponsToFire) {
