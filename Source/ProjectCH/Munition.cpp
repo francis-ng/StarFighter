@@ -58,9 +58,13 @@ void AMunition::AcquireTarget() {
 }
 
 float AMunition::GetDamage() const {
-	return damage;
+	return damage * damageMultiplier;
 }
 
-float AMunition::GetWeaponMultiplier() const {
-	return weaponMultiplier;
+float AMunition::GetDamageMultiplier() const {
+	return damageMultiplier;
+}
+
+void AMunition::SetDamageMultiplier(float multiplier) {
+	damageMultiplier = multiplier;
 }

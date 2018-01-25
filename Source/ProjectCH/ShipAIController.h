@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Ship.h"
 #include "WeaponComponent.h"
+#include "Components/PrimitiveComponent.h"
 #include "GameFramework/Actor.h"
 #include "AIController.h"
 #include "ShipAIController.generated.h"

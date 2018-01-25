@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Components/PrimitiveComponent.h"
 #include "Ship.generated.h"
 
 #define OUT
@@ -27,6 +28,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
 	void MoveDown();
 	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
+	void MoveForward();
+	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
+	void MoveBack();
+	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
 	void StopMoveLeft();
 	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
 	void StopMoveRight();
@@ -34,6 +39,10 @@ public:
 	void StopMoveUp();
 	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
 	void StopMoveDown();
+	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
+	void StopMoveForward();
+	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
+	void StopMoveBack();
 	UFUNCTION(BlueprintCallable, Category = "ShipScore")
 	float GetBaseScore() const;
 	UFUNCTION(BlueprintCallable, Category = "ShipScore")
@@ -65,6 +74,7 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	float decayPerSecond;
 	FVector currentMovement = FVector::ZeroVector;
+	UPrimitiveComponent* primitive = nullptr;
 	void Initialize();
 	void NormalizeMovementVectors();
 	void DecayMultiplier(float DeltaTime);

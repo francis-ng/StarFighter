@@ -27,8 +27,7 @@ void AShip::Tick(float DeltaTime)
 
 	FHitResult *collisionResult = nullptr;
 	if (currentMovement != FVector::ZeroVector) {
-		FVector currentLocation = GetActorLocation();
-		SetActorLocation(currentLocation + currentMovement * movementSpeed, true, OUT collisionResult);
+		primitive->SetPhysicsLinearVelocity(currentMovement * movementSpeed);
 	}
 	DecayMultiplier(DeltaTime);
 }
@@ -36,6 +35,11 @@ void AShip::Tick(float DeltaTime)
 void AShip::Initialize() {
 	currentMultiplier = maxMultiplier;
 	decayPerSecond = (maxMultiplier - 1) / decayTime;
+	primitive = Cast<UPrimitiveComponent>(GetRootComponent());
+	if (!primitive) {
+		UE_LOG(LogTemp, Error, TEXT("%s cannot find primitive"), *GetName())
+		return;
+	}
 }
 
 void AShip::NormalizeMovementVectors() {
@@ -70,6 +74,14 @@ void AShip::MoveRight() {
 	currentMovement += rightDirection;
 }
 
+void AShip::MoveForward() {
+	currentMovement += GetActorForwardVector();
+}
+
+void AShip::MoveBack() {
+	currentMovement -= GetActorForwardVector();
+}
+
 void AShip::StopMoveUp() {
 	currentMovement -= upDirection;
 }
@@ -84,6 +96,14 @@ void AShip::StopMoveLeft() {
 
 void AShip::StopMoveRight() {
 	currentMovement -= rightDirection;
+}
+
+void AShip::StopMoveForward() {
+	currentMovement -= GetActorForwardVector();
+}
+
+void AShip::StopMoveBack() {
+	currentMovement += GetActorForwardVector();
 }
 
 float AShip::GetScoreMultiplier() const {

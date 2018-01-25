@@ -22,6 +22,8 @@ void AShipAIController::Possess(APawn* InPawn) {
 		UE_LOG(LogTemp, Error, TEXT("%s cannot find controlled ship's weapon"), *GetOwner()->GetName())
 	}
 	controlledShipWeapon->SetFiring(true);
+
+	controlledShip->MoveForward();
 }
 
 AShip* AShipAIController::GetControlledShip() const {
