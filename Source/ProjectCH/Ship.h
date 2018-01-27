@@ -43,6 +43,8 @@ public:
 	void StopMoveForward();
 	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
 	void StopMoveBack();
+	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
+	float GetSpeed() const;
 	UFUNCTION(BlueprintCallable, Category = "ShipScore")
 	float GetBaseScore() const;
 	UFUNCTION(BlueprintCallable, Category = "ShipScore")

@@ -32,6 +32,8 @@ protected:
 	bool IsTargetValid() const;
 	UPROPERTY(EditAnywhere)
 	float maxForce = 0.0f;
+	UPROPERTY(EditAnywhere)
+	float predictionDeltaMod = 1.0;
 	UPROPERTY()
 	APawn* target = nullptr;
 	UPROPERTY()

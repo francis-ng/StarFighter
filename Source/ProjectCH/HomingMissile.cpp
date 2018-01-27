@@ -54,12 +54,17 @@ void AHomingMissile::AcquireTarget() {
 }
 
 void AHomingMissile::CalculateNextVector() {
+	primitive->SetPhysicsLinearVelocity(primitive->GetPhysicsLinearVelocity().GetClampedToMaxSize(maxSpeed));
 	if (IsTargetValid()) {
+		FVector distance = target->GetActorLocation() - GetActorLocation();
+		float tdelta = distance.Size() / Cast<AShip>(target)->GetSpeed() * predictionDeltaMod;
+		FVector predictedTarget = target->GetActorLocation() + Cast<UPrimitiveComponent>(target->GetRootComponent())->GetPhysicsLinearVelocity() * tdelta;
+
 		FVector currentVelocity = primitive->GetPhysicsLinearVelocity();
-		FVector desiredVelocity = (target->GetActorLocation() - GetActorLocation()) * maxSpeed;
+		FVector desiredVelocity = (predictedTarget - GetActorLocation()) * maxSpeed;
 		FVector steering = desiredVelocity - currentVelocity;
 
-		steering = VectorUtils::Truncate(steering, maxForce);
+		steering = steering.GetClampedToMaxSize(maxForce);
 
 		primitive->AddForce(steering);
 	}

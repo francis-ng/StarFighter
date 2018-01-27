@@ -42,6 +42,8 @@ public:
 	void FireWeapon(int32 weaponNumber, bool toFire) const;
 	UFUNCTION(BlueprintImplementableEvent, Category = "Boss AI Controller")
 	void MoveBoss(FVector RelativeMovement, AShip* ControlledShip);
+	UFUNCTION(BlueprintCallable, Category = "Boss AI Controller")
+	void ClearInstructions();
 	
 private:
 	AShip* controlledShip = nullptr;

@@ -41,11 +41,12 @@ void ABossAIController::FireWeapon(int32 weaponNumber, bool toFire) const {
 
 void ABossAIController::Initialize() {
 	if (BossInstructions.Num() == 0) {
-		UE_LOG(LogTemp, Error, TEXT("%s boss has no instructions"), *GetOwner()->GetName())
+		lastInstruction = 0;
 	}
-
-	lastInstruction = BossInstructions.Num() - 1;
-	ResetInstructionSet();
+	else {
+		lastInstruction = BossInstructions.Num() - 1;
+		ResetInstructionSet();
+	}
 }
 
 void ABossAIController::ResetInstructionSet() {
@@ -64,7 +65,7 @@ void ABossAIController::TrackTime(float DeltaTime) {
 			ExecuteInstructions(BossInstructions[currentInstruction]);
 		}
 	}
-	else {
+	else if (currentInstruction > lastInstruction) {
 		ResetInstructionSet();
 	}
 }
@@ -80,6 +81,12 @@ void ABossAIController::ExecuteWeapons(TArray<int32> weaponsToFire) {
 		bool toFire = weaponNum < 0 ? false : true;
 		FireWeapon(trueWeaponNum, toFire);
 	}
+}
+
+void ABossAIController::ClearInstructions() {
+	BossInstructions.Empty();
+	currentInstruction = 0;
+	lastInstruction = 0;
 }
 
 AShip* ABossAIController::GetControlledShip() const {

@@ -19,7 +19,7 @@ void ALinearProjectile::AcquireTarget() {
 	if (targetsPlayer) {
 		APawn* character = GetWorld()->GetFirstPlayerController()->GetPawn();
 		if (!character) {
-			UE_LOG(LogTemp, Error, TEXT("%s character cannot be found"), *GetName())
+			initialDirection = GetActorForwardVector();
 		}
 		else {
 			initialDirection = character->GetActorLocation() - GetActorLocation();

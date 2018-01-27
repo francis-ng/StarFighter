@@ -106,6 +106,10 @@ void AShip::StopMoveBack() {
 	currentMovement += GetActorForwardVector();
 }
 
+float AShip::GetSpeed() const {
+	return movementSpeed;
+}
+
 float AShip::GetScoreMultiplier() const {
 	return currentMultiplier;
 }
