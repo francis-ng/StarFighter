@@ -30,8 +30,7 @@ void AHomingMissile::InitializeProjectile() {
 	primitive->SetPhysicsLinearVelocity(initialDirection * initialSpeed);
 	playerShip = GetWorld()->GetFirstPlayerController()->GetPawn();
 	if (!playerShip) {
-		UE_LOG(LogTemp, Error, TEXT("Player cannot be found"))
-			return;
+		return;
 	}
 }
 

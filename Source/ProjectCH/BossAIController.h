@@ -6,6 +6,8 @@
 #include "AIController.h"
 #include "Ship.h"
 #include "WeaponComponent.h"
+#include "ConstructorHelpers.h"
+#include "Engine/DataTable.h"
 #include "BossAIController.generated.h"
 
 /// Actions for boss at particular point of time
@@ -13,24 +15,30 @@
 /// Weapon number is positive to fire, negative to stop firing. Because of that, weapons should be numbered from 1
 /// Weapon 0 may always fire
 USTRUCT(BlueprintType)
-struct FBossInstructionData {
+struct FBossInstructionData : public FTableRowBase {
 	GENERATED_USTRUCT_BODY();
 
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Boss Instruction")
+	FBossInstructionData() :
+		TimePoint(0),
+		RelativeMovement(FVector::ZeroVector) {}
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Boss Instruction")
 	float TimePoint;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Boss Instruction")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Boss Instruction")
 	FVector RelativeMovement;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Boss Instruction")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Boss Instruction")
 	TArray<int32> WeaponsToFire;
 };
+
+static const FString ContextString(TEXT("GENERAL"));
 /**
  * 
  */
 UCLASS()
 class PROJECTCH_API ABossAIController : public AAIController
 {
-	GENERATED_BODY()
+	GENERATED_UCLASS_BODY()
 	
 public:
 	virtual void Tick(float DeltaTime) override;
@@ -44,18 +52,20 @@ public:
 	void MoveBoss(FVector RelativeMovement, AShip* ControlledShip);
 	UFUNCTION(BlueprintCallable, Category = "Boss AI Controller")
 	void ClearInstructions();
+
+	void PopulateInstructions();
 	
 private:
 	AShip* controlledShip = nullptr;
 	TMap<int32, UWeaponComponent*> weapons;
-	UPROPERTY(EditDefaultsOnly)
-	TArray<FBossInstructionData> BossInstructions;
+	UDataTable* BossInstructionTable;
+	TArray<FBossInstructionData*> BossInstructions;
 	float timer;
 	int32 currentInstruction;
 	int32 lastInstruction;
 	void Initialize();
 	void TrackTime(float DeltaTime);
-	void ExecuteInstructions(FBossInstructionData instructions);
+	void ExecuteInstructions(FBossInstructionData* instructions);
 	void ResetInstructionSet();
 	void ExecuteWeapons(TArray<int32> weaponsToFire);
 };

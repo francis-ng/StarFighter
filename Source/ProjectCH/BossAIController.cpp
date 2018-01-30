@@ -2,9 +2,17 @@
 
 #include "BossAIController.h"
 
+ABossAIController::ABossAIController(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
+	static::ConstructorHelpers::FObjectFinder<UDataTable> BossInstructionData(TEXT("DataTable'/Game/Data/BossInstructions'"));
+	if (BossInstructionData.Object) {
+		BossInstructionTable = BossInstructionData.Object;
+	}
+}
+
 void ABossAIController::BeginPlay() {
 	Super::BeginPlay();
 
+	PopulateInstructions();
 	Initialize();
 }
 
@@ -34,6 +42,12 @@ void ABossAIController::Possess(APawn* InPawn) {
 	}
 }
 
+void ABossAIController::PopulateInstructions() {
+	TArray<FBossInstructionData*> outRows;
+	BossInstructionTable->GetAllRows<FBossInstructionData>(ContextString, outRows);
+	BossInstructions = outRows;
+}
+
 void ABossAIController::FireWeapon(int32 weaponNumber, bool toFire) const {
 	UWeaponComponent* weapon = weapons.FindRef(weaponNumber);
 	weapon->SetFiring(toFire);
@@ -41,7 +55,7 @@ void ABossAIController::FireWeapon(int32 weaponNumber, bool toFire) const {
 
 void ABossAIController::Initialize() {
 	if (BossInstructions.Num() == 0) {
-		lastInstruction = 0;
+		lastInstruction = -1;
 	}
 	else {
 		lastInstruction = BossInstructions.Num() - 1;
@@ -60,19 +74,19 @@ void ABossAIController::ResetInstructionSet() {
 void ABossAIController::TrackTime(float DeltaTime) {
 	timer += DeltaTime;
 	if (currentInstruction < lastInstruction) {
-		if (timer >= BossInstructions[currentInstruction + 1].TimePoint) {
+		if (timer >= BossInstructions[currentInstruction + 1]->TimePoint) {
 			currentInstruction++;
 			ExecuteInstructions(BossInstructions[currentInstruction]);
 		}
 	}
-	else if (currentInstruction > lastInstruction) {
+	else if (currentInstruction == lastInstruction) {
 		ResetInstructionSet();
 	}
 }
 
-void ABossAIController::ExecuteInstructions(FBossInstructionData instructions) {
-	MoveBoss(instructions.RelativeMovement, controlledShip);
-	ExecuteWeapons(instructions.WeaponsToFire);
+void ABossAIController::ExecuteInstructions(FBossInstructionData* instructions) {
+	MoveBoss(instructions->RelativeMovement, controlledShip);
+	ExecuteWeapons(instructions->WeaponsToFire);
 }
 
 void ABossAIController::ExecuteWeapons(TArray<int32> weaponsToFire) {
