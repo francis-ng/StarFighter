@@ -4,12 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Ship.h"
+#include "ConstructorHelpers.h"
 #include "Engine/LevelScriptActor.h"
 #include "Engine/World.h"
+#include "Engine/DataTable.h"
 #include "ActionLevelScriptActor.generated.h"
 
 USTRUCT(BlueprintType)
-struct FWaveDetails {
+struct FWaveDetails : public FTableRowBase {
 	GENERATED_USTRUCT_BODY();
 
 public:
@@ -22,7 +24,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FWaveData {
+struct FWaveData : public FTableRowBase {
 	GENERATED_USTRUCT_BODY();
 
 public:
@@ -32,21 +34,26 @@ public:
 	TArray<FWaveDetails> WaveDetails;
 };
 
+static const FString ContextString(TEXT("GENERAL"));
+
 /**
  * 
  */
 UCLASS()
 class PROJECTCH_API AActionLevelScriptActor : public ALevelScriptActor
 {
-	GENERATED_BODY()
+	GENERATED_UCLASS_BODY()
 	
 public:
 	virtual void Tick(float DeltaTime) override;
 	void BeginPlay() override;
+	void PopulateWaves();
 	
 private:
+	UDataTable* WaveDataTable;
+	TArray<FWaveData*> WaveData;
 	UPROPERTY(EditDefaultsOnly)
-	TArray<FWaveData> WaveData;
+	FString DataSheet = TEXT("DataTable'/Game/Data/Level1Waves'");
 	UPROPERTY(EditAnywhere)
 	float spawnDistance;
 	UPROPERTY(EditAnywhere)
@@ -58,6 +65,6 @@ private:
 	int32 lastInstruction;
 	void Initialize();
 	void TrackTime(float DeltaTime);
-	void ExecuteInstructions(FWaveData instructions);
+	void ExecuteInstructions(FWaveData* instructions);
 	void ResetInstructionSet();
 };
