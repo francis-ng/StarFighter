@@ -23,6 +23,7 @@ void ABossAIController::Tick(float DeltaTime) {
 }
 
 void ABossAIController::Possess(APawn* InPawn) {
+	Super::Possess(InPawn);
 	controlledShip = Cast<AShip>(InPawn);
 	if (!controlledShip) {
 		UE_LOG(LogTemp, Error, TEXT("%s cannot find controlled ship"), *GetOwner()->GetName())
@@ -104,5 +105,5 @@ void ABossAIController::ClearInstructions() {
 }
 
 AShip* ABossAIController::GetControlledShip() const {
-	return Cast<AShip>(GetPawn());
+	return controlledShip;
 }
