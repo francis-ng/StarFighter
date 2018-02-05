@@ -44,4 +44,8 @@ public:
 	static FTimeComponents GameTimeToTime(float GameTime);
 	UFUNCTION(BlueprintCallable, Category = "TargetingHelpers", meta = (WorldContext = "WorldContextObject"))
 	static AShip* FindNearestEnemy(UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "HealthHelpers", meta = (WorldContext = "WorldContextObject"))
+	static float GetHealthAsPercentage(AShip* ship);
+	UFUNCTION(BlueprintCallable, Category = "HealthHelpers", meta = (WorldContext = "WorldContextObject"))
+	static float GetShieldAsPercentage(AShip* ship);
 };

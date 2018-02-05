@@ -20,13 +20,10 @@ struct FBossInstructionData : public FTableRowBase {
 
 public:
 	FBossInstructionData() :
-		TimePoint(0),
-		RelativeMovement(FVector::ZeroVector) {}
+		TimePoint(0) {}
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Boss Instruction")
 	float TimePoint;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Boss Instruction")
-	FVector RelativeMovement;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Boss Instruction")
 	TArray<int32> WeaponsToFire;
 };
@@ -48,10 +45,10 @@ public:
 	AShip* GetControlledShip() const;
 	UFUNCTION(BlueprintCallable, Category = "Boss AI Controller")
 	void FireWeapon(int32 weaponNumber, bool toFire) const;
-	UFUNCTION(BlueprintImplementableEvent, Category = "Boss AI Controller")
-	void MoveBoss(FVector RelativeMovement, AShip* ControlledShip);
 	UFUNCTION(BlueprintCallable, Category = "Boss AI Controller")
 	void ClearInstructions();
+	UFUNCTION(BlueprintCallable, Category = "Boss AI Controller")
+	FVector FindNearLocation(AActor* playerShip, float randomRadius, float horizontalSize, float verticalSize, float distanceFromPlayer);
 
 	void PopulateInstructions();
 	

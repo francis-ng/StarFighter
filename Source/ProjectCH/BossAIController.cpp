@@ -86,7 +86,6 @@ void ABossAIController::TrackTime(float DeltaTime) {
 }
 
 void ABossAIController::ExecuteInstructions(FBossInstructionData* instructions) {
-	MoveBoss(instructions->RelativeMovement, controlledShip);
 	ExecuteWeapons(instructions->WeaponsToFire);
 }
 
@@ -96,6 +95,18 @@ void ABossAIController::ExecuteWeapons(TArray<int32> weaponsToFire) {
 		bool toFire = weaponNum < 0 ? false : true;
 		FireWeapon(trueWeaponNum, toFire);
 	}
+}
+
+FVector ABossAIController::FindNearLocation(AActor* playerShip, float randomRadius, float horizontalSize, float verticalSize, float distanceFromPlayer) {
+	if (!controlledShip || !playerShip) return FVector(distanceFromPlayer, 0, 0);
+	FVector currentLocation = controlledShip->GetActorLocation();
+	FVector playerLocation = playerShip->GetActorLocation();
+
+	float x = playerLocation.X + distanceFromPlayer;
+	float y = FMath::Clamp<float>(FMath::FRandRange(-randomRadius, randomRadius) + currentLocation.Y, -horizontalSize, horizontalSize);
+	float z = FMath::Clamp<float>(FMath::FRandRange(-randomRadius, randomRadius) + currentLocation.Z, -verticalSize, verticalSize);
+
+	return FVector(x, y, z);
 }
 
 void ABossAIController::ClearInstructions() {
