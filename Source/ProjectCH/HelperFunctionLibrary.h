@@ -10,6 +10,7 @@
 #include "PlayerShip.h"
 #include "EngineUtils.h"
 #include "GameFramework/Actor.h"
+#include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "HelperFunctionLibrary.generated.h"
@@ -48,4 +49,6 @@ public:
 	static float GetHealthAsPercentage(AShip* ship);
 	UFUNCTION(BlueprintCallable, Category = "HealthHelpers", meta = (WorldContext = "WorldContextObject"))
 	static float GetShieldAsPercentage(AShip* ship);
+	UFUNCTION(BlueprintCallable, Category = "BossHelpers", meta = (WorldContext = "WorldContextObject"))
+	static bool BossExists(UObject* WorldContextObject);
 };

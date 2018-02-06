@@ -51,7 +51,9 @@ void ABossAIController::PopulateInstructions() {
 
 void ABossAIController::FireWeapon(int32 weaponNumber, bool toFire) const {
 	UWeaponComponent* weapon = weapons.FindRef(weaponNumber);
-	weapon->SetFiring(toFire);
+	if (weapon) {
+		weapon->SetFiring(toFire);
+	}
 }
 
 void ABossAIController::Initialize() {
