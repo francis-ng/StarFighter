@@ -51,35 +51,29 @@ void ABossAIController::PopulateInstructions() {
 
 void ABossAIController::FireWeapon(int32 weaponNumber, bool toFire) const {
 	UWeaponComponent* weapon = weapons.FindRef(weaponNumber);
-	if (weapon) {
+	if (controlledShip && !controlledShip->IsPendingKillOrUnreachable()) {
 		weapon->SetFiring(toFire);
 	}
 }
 
 void ABossAIController::Initialize() {
-	if (BossInstructions.Num() == 0) {
-		lastInstruction = -1;
-	}
-	else {
-		lastInstruction = BossInstructions.Num() - 1;
-		ResetInstructionSet();
-	}
+	lastInstruction = BossInstructions.Num() - 1;
+	ResetInstructionSet();
 }
 
 void ABossAIController::ResetInstructionSet() {
 	timer = 0;
 	currentInstruction = 0;
-	ExecuteInstructions(BossInstructions[currentInstruction]);
 }
 
 /// Keep track of time and whether to execute the next instruction
 /// Keyframe style system of tracking boss instructions with no delay between first and last
 void ABossAIController::TrackTime(float DeltaTime) {
 	timer += DeltaTime;
-	if (currentInstruction < lastInstruction) {
-		if (timer >= BossInstructions[currentInstruction + 1]->TimePoint) {
-			currentInstruction++;
+	if (currentInstruction <= lastInstruction && BossInstructions.Num() > 0) {
+		if (BossInstructions[currentInstruction]->TimePoint) {
 			ExecuteInstructions(BossInstructions[currentInstruction]);
+			currentInstruction++;
 		}
 	}
 	else if (currentInstruction == lastInstruction) {
