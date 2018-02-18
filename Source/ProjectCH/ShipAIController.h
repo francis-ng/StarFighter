@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -10,9 +10,7 @@
 #include "AIController.h"
 #include "ShipAIController.generated.h"
 
-/**
- * 
- */
+/// Ship AI controller base class
 UCLASS()
 class PROJECTCH_API AShipAIController : public AAIController
 {

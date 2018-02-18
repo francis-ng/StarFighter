@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -7,17 +7,19 @@
 #include "Components/ActorComponent.h"
 #include "WeaponManagerComponent.generated.h"
 
+/// Weapon changed event delegate
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWeaponChangedEvent, UTexture2D*, Texture);
 
+/// Weapon manager component base class (management of player weapons)
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTCH_API UWeaponManagerComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	/// Contructor for this component's properties
 	UWeaponManagerComponent();
-	// Called every frame
+	/// Tick override
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	UFUNCTION(BlueprintCallable, Category = "WeaponManager")
 	void CycleNextWeapon();
@@ -33,7 +35,7 @@ public:
 	FWeaponChangedEvent onWeaponChanged;
 
 protected:
-	// Called when the game starts
+	/// BeginPlay override
 	virtual void BeginPlay() override;
 
 private:	

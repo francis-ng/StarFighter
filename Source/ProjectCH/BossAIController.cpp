@@ -1,14 +1,16 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "BossAIController.h"
 
+/// Constructor
 ABossAIController::ABossAIController(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
-	static::ConstructorHelpers::FObjectFinder<UDataTable> BossInstructionData(TEXT("DataTable'/Game/Data/BossInstructions'"));
+	static::ConstructorHelpers::FObjectFinder<UDataTable> BossInstructionData(*DataSheet);
 	if (BossInstructionData.Object) {
 		BossInstructionTable = BossInstructionData.Object;
 	}
 }
 
+/// BeginPlay override
 void ABossAIController::BeginPlay() {
 	Super::BeginPlay();
 
@@ -16,12 +18,14 @@ void ABossAIController::BeginPlay() {
 	Initialize();
 }
 
+/// Tick override
 void ABossAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	TrackTime(DeltaTime);
 }
 
+/// Possess override
 void ABossAIController::Possess(APawn* InPawn) {
 	Super::Possess(InPawn);
 	controlledShip = Cast<AShip>(InPawn);
@@ -43,12 +47,14 @@ void ABossAIController::Possess(APawn* InPawn) {
 	}
 }
 
+/// Load datatable and store in variable
 void ABossAIController::PopulateInstructions() {
 	TArray<FBossInstructionData*> outRows;
 	BossInstructionTable->GetAllRows<FBossInstructionData>(ContextString, outRows);
 	BossInstructions = outRows;
 }
 
+/// Fire boss weapons
 void ABossAIController::FireWeapon(int32 weaponNumber, bool toFire) const {
 	UWeaponComponent* weapon = weapons.FindRef(weaponNumber);
 	if (controlledShip && !controlledShip->IsPendingKillOrUnreachable()) {
@@ -56,11 +62,13 @@ void ABossAIController::FireWeapon(int32 weaponNumber, bool toFire) const {
 	}
 }
 
+/// Initialization function calls
 void ABossAIController::Initialize() {
 	lastInstruction = BossInstructions.Num() - 1;
 	ResetInstructionSet();
 }
 
+/// Reset timer and instruction progression
 void ABossAIController::ResetInstructionSet() {
 	timer = 0;
 	currentInstruction = 0;
@@ -81,10 +89,12 @@ void ABossAIController::TrackTime(float DeltaTime) {
 	}
 }
 
+/// Execute a set of boss instructions
 void ABossAIController::ExecuteInstructions(FBossInstructionData* instructions) {
 	ExecuteWeapons(instructions->WeaponsToFire);
 }
 
+/// Execute a weapon instruction subset
 void ABossAIController::ExecuteWeapons(TArray<int32> weaponsToFire) {
 	for (int32 weaponNum : weaponsToFire) {
 		int32 trueWeaponNum = abs(weaponNum);
@@ -93,6 +103,7 @@ void ABossAIController::ExecuteWeapons(TArray<int32> weaponsToFire) {
 	}
 }
 
+/// Randomize a location to travel to
 FVector ABossAIController::FindNearLocation(AActor* playerShip, float randomRadius, float horizontalSize, float verticalSize, float distanceFromPlayer) {
 	if (!controlledShip || !playerShip) return FVector(distanceFromPlayer, 0, 0);
 	FVector currentLocation = controlledShip->GetActorLocation();
@@ -105,12 +116,14 @@ FVector ABossAIController::FindNearLocation(AActor* playerShip, float randomRadi
 	return FVector(x, y, z);
 }
 
+/// Empty boss instructions
 void ABossAIController::ClearInstructions() {
 	BossInstructions.Empty();
 	currentInstruction = 0;
 	lastInstruction = 0;
 }
 
+/// Get the controlled boss ship
 AShip* ABossAIController::GetControlledShip() const {
 	return controlledShip;
 }

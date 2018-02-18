@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -10,6 +10,7 @@
 #include "Engine/DataTable.h"
 #include "ActionLevelScriptActor.generated.h"
 
+/// Spawn data for a single wave of enemies
 USTRUCT(BlueprintType)
 struct FWaveDetails : public FTableRowBase {
 	GENERATED_USTRUCT_BODY();
@@ -23,6 +24,7 @@ public:
 	FRotator FacingDirection;
 };
 
+/// List of ships to spawn to make a wave
 USTRUCT(BlueprintType)
 struct FWaveData : public FTableRowBase {
 	GENERATED_USTRUCT_BODY();
@@ -36,9 +38,7 @@ public:
 
 static const FString ContextString(TEXT("GENERAL"));
 
-/**
- * 
- */
+/// Gameplay level class
 UCLASS()
 class PROJECTCH_API AActionLevelScriptActor : public ALevelScriptActor
 {

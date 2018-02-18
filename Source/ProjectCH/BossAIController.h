@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -29,9 +29,8 @@ public:
 };
 
 static const FString ContextString(TEXT("GENERAL"));
-/**
- * 
- */
+
+/// AI Controller for boss
 UCLASS()
 class PROJECTCH_API ABossAIController : public AAIController
 {
@@ -53,6 +52,8 @@ public:
 	void PopulateInstructions();
 	
 private:
+	UPROPERTY(EditDefaultsOnly)
+	FString DataSheet = TEXT("DataTable'/Game/Data/BossInstructions'");
 	AShip* controlledShip = nullptr;
 	TMap<int32, UWeaponComponent*> weapons;
 	UDataTable* BossInstructionTable;

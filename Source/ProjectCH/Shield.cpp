@@ -1,9 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "Shield.h"
 
 
-// Sets default values
+/// Contructor
 AShield::AShield()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -11,23 +11,25 @@ AShield::AShield()
 
 }
 
-// Called when the game starts or when spawned
+/// BeginPlay override or when spawned
 void AShield::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
-// Called every frame
+/// Tick override
 void AShield::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
 
+/// Store the player controlled ship in variable
 void AShield::SetPlayerShip(AShip* ship) {
 	playerShip = ship;
 }
 
+/// Charge shields when barrier is hit
 void AShield::ShieldHit(AMunition* hitProjectile) {
 	if (playerShip) {
 		UHealthComponent* health = Cast<UHealthComponent>(playerShip->GetComponentByClass(UHealthComponent::StaticClass()));

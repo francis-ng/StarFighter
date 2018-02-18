@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -8,15 +8,16 @@
 #include "GameFramework/PawnMovementComponent.h"
 #include "Munition.generated.h"
 
+/// Ammunition base class
 UCLASS()
 class PROJECTCH_API AMunition : public APawn
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
+	/// Contructor for this pawn's properties
 	AMunition();
-	// Called every frame
+	/// Tick override
 	virtual void Tick(float DeltaTime) override;
 	UFUNCTION(BlueprintCallable, Category = "Munitions")
 	void SetInitialDirection(FVector direction);
@@ -44,7 +45,7 @@ protected:
 	FVector initialDirection;
 	float damageMultiplier = 1.0f;
 	UPrimitiveComponent* primitive;
-	// Called when the game starts or when spawned
+	/// BeginPlay override or when spawned
 	virtual void BeginPlay() override;
 	void CalculateLifetime(float DeltaTime);
 	virtual void AcquireTarget();

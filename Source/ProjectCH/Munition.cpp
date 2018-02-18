@@ -1,22 +1,22 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "Munition.h"
 
 
-// Sets default values
+/// Contructor
 AMunition::AMunition()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-// Called when the game starts or when spawned
+/// BeginPlay override or when spawned
 void AMunition::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-// Called every frame
+/// Tick override
 void AMunition::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -24,26 +24,31 @@ void AMunition::Tick(float DeltaTime)
 	//TurnToDirectionOfMovement();
 }
 
+/// Initialization
 void AMunition::InitializeProjectile() {
 	initialDirection.Normalize();
 	primitive = Cast<UPrimitiveComponent>(GetRootComponent());
 	primitive->SetPhysicsLinearVelocity(initialDirection * initialSpeed);
 }
 
+/// Set whether ammunition is targeted at player
 void AMunition::SetTargetsPlayer(bool isAimed) {
 	targetsPlayer = isAimed;
 	AcquireTarget();
 }
 
+/// Set the initial direction of the projectile
 void AMunition::SetInitialDirection(FVector direction) {
 	initialDirection = direction;
 }
 
+/// Sets the actor rotation to direction of movement
 void AMunition::TurnToDirectionOfMovement() {
 	FVector velocity = primitive->GetComponentVelocity();
 	SetActorRotation(velocity.ForwardVector.Rotation());
 }
 
+/// Calculate the amount of time left before despawn
 void AMunition::CalculateLifetime(float DeltaTime) {
 	timeToLive -= DeltaTime;
 	if (timeToLive <= 0) {
@@ -53,10 +58,12 @@ void AMunition::CalculateLifetime(float DeltaTime) {
 	}
 }
 
+/// Default target acquisition
 void AMunition::AcquireTarget() {
 	initialDirection = GetActorForwardVector();
 }
 
+#pragma region Getters
 float AMunition::GetDamage() const {
 	return damage * damageMultiplier;
 }
@@ -64,7 +71,9 @@ float AMunition::GetDamage() const {
 float AMunition::GetDamageMultiplier() const {
 	return damageMultiplier;
 }
+#pragma endregion
 
+/// Set damage multiplier
 void AMunition::SetDamageMultiplier(float multiplier) {
 	damageMultiplier = multiplier;
 }

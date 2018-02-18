@@ -1,9 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "WeaponComponent.h"
 
-
-// Sets default values for this component's properties
+/// Constructor for this component's properties
 UWeaponComponent::UWeaponComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -13,8 +12,7 @@ UWeaponComponent::UWeaponComponent()
 	// ...
 }
 
-
-// Called when the game starts
+/// BeginPlay override
 void UWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -22,8 +20,7 @@ void UWeaponComponent::BeginPlay()
 	InitializeWeapon();
 }
 
-
-// Called every frame
+/// Tick override
 void UWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -39,11 +36,13 @@ void UWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	}
 }
 
+/// Weapon cooldown counting
 void UWeaponComponent::CooldownWeapon(float DeltaTime)
 {
 	timeleft -= DeltaTime;
 }
 
+/// Spawn fired projectiles at defined locations
 void UWeaponComponent::FireWeapon() {
 	for (UActorComponent* Ahardpoint : projectileHardpoints) {
 		USceneComponent* hardpoint = Cast<USceneComponent>(Ahardpoint);
@@ -58,6 +57,7 @@ void UWeaponComponent::FireWeapon() {
 	}
 }
 
+/// Start burst firing
 void UWeaponComponent::BurstFire(float DeltaTime)
 {
 	burstTimeLeft -= DeltaTime;
@@ -74,6 +74,7 @@ void UWeaponComponent::BurstFire(float DeltaTime)
 	}
 }
 
+/// Weapon initialization
 void UWeaponComponent::InitializeWeapon() {
 	projectileHardpoints = GetOwner()->GetComponentsByTag(USceneComponent::StaticClass(), *hardpointTag);
 
@@ -103,18 +104,22 @@ void UWeaponComponent::InitializeWeapon() {
 	burstRemaining = burstCount;
 }
 
+/// Returns whether weapon is being fired
 bool UWeaponComponent::IsFiring() const {
 	return isFiring;
 }
 
+/// Returns whether weapon is in the middle of a burst
 bool UWeaponComponent::IsBursting() const {
 	return isBursting;
 }
 
+/// Set if weapon is firing
 void UWeaponComponent::SetFiring(bool firing) {
 	isFiring = firing;
 }
 
+#pragma region Getters
 FString UWeaponComponent::GetName() const {
 	return weaponName;
 }
@@ -126,3 +131,4 @@ int32 UWeaponComponent::GetPriority() const {
 UTexture2D* UWeaponComponent::GetIcon() const {
 	return weaponIcon;
 }
+#pragma endregion

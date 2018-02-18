@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -9,22 +9,22 @@
 #include "Engine/World.h"
 #include "ShieldComponent.generated.h"
 
-
+/// Energy barrier base component
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTCH_API UShieldComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	/// Contructor for this component's properties
 	UShieldComponent();
-	// Called every frame
+	/// Tick override
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	UFUNCTION(BlueprintCallable, Category = "Shield Component")
 	void GenerateShield();
 
 protected:
-	// Called when the game starts
+	/// BeginPlay override
 	virtual void BeginPlay() override;
 	UPROPERTY(EditDefaultsOnly)
 	FName mountSocketName = NAME_None;

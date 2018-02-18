@@ -1,7 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "HomingMissile.h"
 
+/// BeginPlay override
 void AHomingMissile::BeginPlay() {
 	Super::BeginPlay();
 
@@ -9,6 +10,7 @@ void AHomingMissile::BeginPlay() {
 	AcquireTarget();
 }
 
+/// Tick override
 void AHomingMissile::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
@@ -19,6 +21,7 @@ void AHomingMissile::Tick(float DeltaTime) {
 	CalculateNextVector();
 }
 
+/// Initialization
 void AHomingMissile::InitializeProjectile() {
 	initialDirection = GetActorForwardVector();
 	initialDirection.Normalize();
@@ -34,6 +37,7 @@ void AHomingMissile::InitializeProjectile() {
 	}
 }
 
+/// Sets the necessary homing target
 void AHomingMissile::AcquireTarget() {
 	if (targetsPlayer) {
 		target = playerShip;
@@ -52,6 +56,7 @@ void AHomingMissile::AcquireTarget() {
 	}
 }
 
+/// Vector calculation towards target for homing capability
 void AHomingMissile::CalculateNextVector() {
 	primitive->SetPhysicsLinearVelocity(primitive->GetPhysicsLinearVelocity().GetClampedToMaxSize(maxSpeed));
 	if (IsTargetValid()) {
@@ -69,6 +74,7 @@ void AHomingMissile::CalculateNextVector() {
 	}
 }
 
+/// Checks if homing target is valid
 bool AHomingMissile::IsTargetValid() const {
 	if (!target) {
 		return false;

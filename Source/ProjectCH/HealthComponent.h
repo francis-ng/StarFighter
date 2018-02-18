@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -10,6 +10,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FHealthUpdateEvent, float, MaxHealt
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FEnergyUpdateEvent, float, MaxShield, float, CurrentShield, float, MaxOvercharge, float, CurrentOvercharge);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeathEvent);
 
+/// Health stage enums
 UENUM(BlueprintType)
 enum class EDamageLevelEnum : uint8 {
 	DL_Healthy UMETA(DisplayName="Healthy"),
@@ -17,15 +18,16 @@ enum class EDamageLevelEnum : uint8 {
 	DL_Critical UMETA(DisplayName="Critical")
 };
 
+/// Health component class
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTCH_API UHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	/// Contructor for this component's properties
 	UHealthComponent();
-	// Called every frame
+	/// Tick override
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	UFUNCTION(BlueprintCallable, Category = "HealthComponent")
 	float GetMaxHealth() const;
@@ -63,7 +65,7 @@ public:
 	FDeathEvent onDeath;
 
 protected:
-	// Called when the game starts
+	/// BeginPlay override
 	virtual void BeginPlay() override;
 
 private:	

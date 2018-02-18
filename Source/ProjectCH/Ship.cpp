@@ -1,9 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "Ship.h"
 
 
-// Sets default values
+/// Contructor
 AShip::AShip()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -11,7 +11,7 @@ AShip::AShip()
 
 }
 
-// Called when the game starts or when spawned
+/// BeginPlay override or when spawned
 void AShip::BeginPlay()
 {
 	Super::BeginPlay();
@@ -20,7 +20,7 @@ void AShip::BeginPlay()
 	NormalizeMovementVectors();
 }
 
-// Called every frame
+/// Tick override
 void AShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -32,6 +32,7 @@ void AShip::Tick(float DeltaTime)
 	DecayMultiplier(DeltaTime);
 }
 
+/// Initialization
 void AShip::Initialize() {
 	currentMultiplier = maxMultiplier;
 	decayPerSecond = (maxMultiplier - 1) / decayTime;
@@ -42,6 +43,7 @@ void AShip::Initialize() {
 	}
 }
 
+/// Normalize all movement vectors
 void AShip::NormalizeMovementVectors() {
 	upDirection.Normalize();
 	downDirection.Normalize();
@@ -49,6 +51,7 @@ void AShip::NormalizeMovementVectors() {
 	rightDirection.Normalize();
 }
 
+/// Decay score multiplier (enemy ships only)
 void AShip::DecayMultiplier(float DeltaTime) {
 	if (currentMultiplier > 1) {
 		currentMultiplier -= decayPerSecond * DeltaTime;
@@ -58,6 +61,7 @@ void AShip::DecayMultiplier(float DeltaTime) {
 	}
 }
 
+#pragma region Movement functions
 void AShip::MoveUp() {
 	currentMovement += upDirection;
 }
@@ -105,7 +109,9 @@ void AShip::StopMoveForward() {
 void AShip::StopMoveBack() {
 	currentMovement += GetActorForwardVector();
 }
+#pragma endregion
 
+#pragma region Getters
 float AShip::GetSpeed() const {
 	return movementSpeed;
 }
@@ -117,3 +123,4 @@ float AShip::GetScoreMultiplier() const {
 float AShip::GetBaseScore() const {
 	return baseScore;
 }
+#pragma endregion

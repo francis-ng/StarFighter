@@ -1,9 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "EnergyBurstComponent.h"
 
-
-// Sets default values for this component's properties
+/// Constructor
 UEnergyBurstComponent::UEnergyBurstComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -14,7 +13,7 @@ UEnergyBurstComponent::UEnergyBurstComponent()
 }
 
 
-// Called when the game starts
+/// BeginPlay override
 void UEnergyBurstComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -23,7 +22,7 @@ void UEnergyBurstComponent::BeginPlay()
 }
 
 
-// Called every frame
+/// TickComponent override
 void UEnergyBurstComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -38,6 +37,7 @@ void UEnergyBurstComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	}
 }
 
+/// Initialization
 void UEnergyBurstComponent::InitializeWeapon() {
 	projectileHardpoints = GetOwner()->GetComponentsByTag(USceneComponent::StaticClass(), *hardpointTag);
 
@@ -65,6 +65,7 @@ void UEnergyBurstComponent::InitializeWeapon() {
 	burstRemaining = burstCount;
 }
 
+/// Fire weapon
 void UEnergyBurstComponent::FireWeapon() {
 	for (UActorComponent* Ahardpoint : projectileHardpoints) {
 		USceneComponent* hardpoint = Cast<USceneComponent>(Ahardpoint);
@@ -81,6 +82,7 @@ void UEnergyBurstComponent::FireWeapon() {
 	}
 }
 
+/// Start firing a burst
 void UEnergyBurstComponent::BurstFire(float DeltaTime)
 {
 	burstTimeLeft -= DeltaTime;
@@ -97,6 +99,7 @@ void UEnergyBurstComponent::BurstFire(float DeltaTime)
 	}
 }
 
+/// Set burst count and multiplier according to amount of overcharge available
 void UEnergyBurstComponent::SetBurstStrength() {
 	float overchargeFraction = healthComponent->GetOvercharge() / healthComponent->GetMaxOvercharge();
 	int32 calculatedBurst = floorf(maxBurstCount * overchargeFraction);
@@ -107,24 +110,29 @@ void UEnergyBurstComponent::SetBurstStrength() {
 	damageMultiplier = calculatedMultiplier < 1 ? 1 : calculatedMultiplier;
 }
 
+/// Reset the burst strength to minimum
 void UEnergyBurstComponent::ResetBurstStrength() {
 	burstCount = 1;
 	burstRemaining = 1;
 	damageMultiplier = 1;
 }
 
+/// Check if there is sufficient energy for burst to fire
 bool UEnergyBurstComponent::CanFire() const {
 	return healthComponent->GetCurrentShield() == healthComponent->GetMaxShield();
 }
 
+/// Return if burst is firing
 bool UEnergyBurstComponent::IsFiring() const {
 	return isFiring;
 }
 
+/// Return if burst is in burst fire phase
 bool UEnergyBurstComponent::IsBursting() const {
 	return isBursting;
 }
 
+/// Set flag for burst fire
 void UEnergyBurstComponent::SetFiring(bool firing) {
 	isFiring = firing;
 }

@@ -1,17 +1,20 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "ShipAIController.h"
 
+/// BeginPlay override
 void AShipAIController::BeginPlay() {
 	Super::BeginPlay();
 
 }
 
+/// TickComponent override
 void AShipAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 }
 
+/// Possess override to store ship reference and weapons
 void AShipAIController::Possess(APawn* InPawn) {
 	controlledShip = Cast<AShip>(InPawn);
 	if (!controlledShip) {
@@ -26,6 +29,7 @@ void AShipAIController::Possess(APawn* InPawn) {
 	controlledShip->MoveForward();
 }
 
+/// Get the controlled ship
 AShip* AShipAIController::GetControlledShip() const {
 	return Cast<AShip>(GetPawn());
 }

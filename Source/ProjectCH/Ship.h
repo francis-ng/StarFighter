@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -9,15 +9,16 @@
 
 #define OUT
 
+/// Ship base class
 UCLASS(Blueprintable)
 class PROJECTCH_API AShip : public APawn
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
+	/// Contructor for this pawn's properties
 	AShip();
-	// Called every frame
+	/// Tick override
 	virtual void Tick(float DeltaTime) override;
 	UFUNCTION(BlueprintCallable, Category = "ShipMovement")
 	void MoveLeft();
@@ -51,7 +52,7 @@ public:
 	float GetScoreMultiplier() const;
 
 protected:
-	// Called when the game starts or when spawned
+	/// BeginPlay override or when spawned
 	virtual void BeginPlay() override;
 
 private:	

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -9,16 +9,16 @@
 #include "Engine/World.h"
 #include "EnergyBurstComponent.generated.h"
 
-
+/// Component for firing the energy burst
 UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTCH_API UEnergyBurstComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	/// Contructor for this component's properties
 	UEnergyBurstComponent();
-	// Called every frame
+	/// Tick override
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SetFiring(bool firing);
@@ -28,7 +28,7 @@ public:
 	bool IsBursting() const;
 
 protected:
-	// Called when the game starts
+	/// BeginPlay override
 	virtual void BeginPlay() override;
 	TArray<UActorComponent*> projectileHardpoints;
 

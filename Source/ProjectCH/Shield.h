@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -9,22 +9,23 @@
 #include "GameFramework/Actor.h"
 #include "Shield.generated.h"
 
+/// Energy barrier base class
 UCLASS()
 class PROJECTCH_API AShield : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
+	/// Contructor for this actor's properties
 	AShield();
-	// Called every frame
+	/// Tick override
 	virtual void Tick(float DeltaTime) override;
 	void SetPlayerShip(AShip* ship);
 	UFUNCTION(BlueprintCallable)
 	void ShieldHit(AMunition* hitProjectile);
 
 protected:
-	// Called when the game starts or when spawned
+	/// BeginPlay override or when spawned
 	virtual void BeginPlay() override;
 
 private:	

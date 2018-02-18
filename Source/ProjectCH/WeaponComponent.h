@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -9,16 +9,16 @@
 #include "Engine/World.h"
 #include "WeaponComponent.generated.h"
 
-
+/// Weapon component base class
 UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTCH_API UWeaponComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	/// Contructor for this component's properties
 	UWeaponComponent();
-	// Called every frame
+	/// Tick override
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SetFiring(bool firing);
@@ -34,7 +34,7 @@ public:
 	UTexture2D* GetIcon() const;
 
 protected:
-	// Called when the game starts
+	/// BeginPlay override
 	virtual void BeginPlay() override;
 	TArray<UActorComponent*> projectileHardpoints;
 

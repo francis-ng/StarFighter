@@ -1,8 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "HealthComponent.h"
 
-// Sets default values for this component's properties
+/// Constructor
 UHealthComponent::UHealthComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -12,7 +12,7 @@ UHealthComponent::UHealthComponent()
 	// ...
 }
 
-// Called when the game starts
+/// BeginPlay override
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -21,7 +21,7 @@ void UHealthComponent::BeginPlay()
 	currentShield = maxShield;
 }
 
-// Called every frame
+/// Tick override
 void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -29,6 +29,7 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	RecoverShield(shieldRechargeRate * DeltaTime);
 }
 
+/// Deal damage to this health component
 void UHealthComponent::DealDamage(float damage) {
 	shieldOvercharge -= damage;
 	if (shieldOvercharge < 0) {
@@ -46,6 +47,7 @@ void UHealthComponent::DealDamage(float damage) {
 	onShieldUpdate.Broadcast(maxShield, currentShield, GetMaxOvercharge(), shieldOvercharge);
 }
 
+/// Recover health
 void UHealthComponent::RecoverHealth(float amount) {
 	currentHealth += amount;
 	if (currentHealth > maxHealth) {
@@ -54,6 +56,7 @@ void UHealthComponent::RecoverHealth(float amount) {
 	onHealthUpdate.Broadcast(maxHealth, currentHealth);
 }
 
+/// Recover shields
 void UHealthComponent::RecoverShield(float amount) {
 	if (currentShield < maxShield) {
 		currentShield += amount;
@@ -64,6 +67,7 @@ void UHealthComponent::RecoverShield(float amount) {
 	}
 }
 
+/// Charge shields and overcharge if over maximum
 void UHealthComponent::Overcharge(float amount) {
 	currentShield += amount;
 	if (currentShield > maxShield) {
@@ -76,6 +80,7 @@ void UHealthComponent::Overcharge(float amount) {
 	onShieldUpdate.Broadcast(maxShield, currentShield, GetMaxOvercharge(), shieldOvercharge);
 }
 
+/// Release all shields for energy burst
 float UHealthComponent::EnergyRelease() {
 	float energyReleased = GetTotalEnergy();
 	currentShield = 0;
@@ -84,6 +89,7 @@ float UHealthComponent::EnergyRelease() {
 	return energyReleased;
 }
 
+#pragma region Getters
 float UHealthComponent::GetMaxHealth() const {
 	return maxHealth;
 }
@@ -111,11 +117,14 @@ float UHealthComponent::GetOvercharge() const {
 float UHealthComponent::GetTotalEnergy() const {
 	return currentShield + shieldOvercharge;
 }
+#pragma endregion
 
+/// Check if owner is alive according to health
 bool UHealthComponent::IsAlive() const {
 	return currentHealth > 0;
 }
 
+/// Get how damaged the component is according to set percentages
 EDamageLevelEnum UHealthComponent::GetDamageLevel() const {
 	float damagePercentage = currentHealth / maxHealth;
 	if (damagePercentage <= criticalHealthPercentage) {

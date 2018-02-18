@@ -1,9 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "ShieldComponent.h"
 
 
-// Sets default values for this component's properties
+/// Contructor for this component's properties
 UShieldComponent::UShieldComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -12,7 +12,7 @@ UShieldComponent::UShieldComponent()
 }
 
 
-// Called when the game starts
+/// BeginPlay override
 void UShieldComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -21,7 +21,7 @@ void UShieldComponent::BeginPlay()
 }
 
 
-// Called every frame
+/// Tick override
 void UShieldComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -33,6 +33,7 @@ void UShieldComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	}
 }
 
+/// Spawn barrier if available and attach to parent
 void UShieldComponent::GenerateShield() {
 	AActor* parentActor = GetOwner();
 	if (!theShield && currentCooldown <= 0) {
@@ -43,6 +44,7 @@ void UShieldComponent::GenerateShield() {
 	}
 }
 
+/// Calculate the amount of time left before despawn
 void UShieldComponent::CalculateLifetime(float DeltaTime) {
 	currentLifetime -= DeltaTime;
 	if (currentLifetime <= 0) {
@@ -56,18 +58,22 @@ void UShieldComponent::CalculateLifetime(float DeltaTime) {
 	}
 }
 
+/// Reset lifetime counter
 void UShieldComponent::ResetLifetime() {
 	currentLifetime = timeToLive;
 }
 
+/// Cooldown barrier
 void UShieldComponent::Cooldown(float DeltaTime) {
 	currentCooldown -= DeltaTime;
 }
 
+/// Reset cooldown counter
 void UShieldComponent::ResetCooldown() {
 	currentCooldown = cooldown;
 }
 
+/// Initialization
 void UShieldComponent::Initialize() {
 	if (!shield) {
 		UE_LOG(LogTemp, Error, TEXT("No shield set on %s"), *GetOwner()->GetName())

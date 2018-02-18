@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #pragma once
 
@@ -7,11 +7,10 @@
 #include "Components/InputComponent.h"
 #include "PlayerShip.generated.h"
 
-/**
- * 
- */
+/// Multiplier update broadcast delegate
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMultiplierUpdateEvent, float, Multiplier);
 
+/// Player ship base class
 UCLASS()
 class PROJECTCH_API APlayerShip : public AShip
 {

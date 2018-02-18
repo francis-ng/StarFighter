@@ -1,11 +1,13 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "PlayerShip.h"
 
+/// Constructor
 APlayerShip::APlayerShip() {
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+/// Bind input events to keys
 void APlayerShip::SetupPlayerInputComponent(UInputComponent* InputComponent) {
 	Super::SetupPlayerInputComponent(InputComponent);
 
@@ -21,12 +23,14 @@ void APlayerShip::SetupPlayerInputComponent(UInputComponent* InputComponent) {
 	}
 }
 
+/// Tick override
 void APlayerShip::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	IncrementNoDamageMultiplier(DeltaTime);
 }
 
+/// Increment no damage multiplier by time passed
 void APlayerShip::IncrementNoDamageMultiplier(float DeltaTime) {
 	timePassed += DeltaTime;
 	if (timePassed >= noDamageMultiplierTimestep) {
@@ -36,12 +40,14 @@ void APlayerShip::IncrementNoDamageMultiplier(float DeltaTime) {
 	}
 }
 
+/// Reset the no damage multiplier
 void APlayerShip::ResetNoDamageMultiplier() {
 	timePassed = 0;
 	currentNoDamageMultiplier = 1;
 	onNoDamageMultiplierUpdate.Broadcast(currentNoDamageMultiplier);
 }
 
+/// Get the no damage multiplier
 float APlayerShip::GetNoDamageMultiplier() const {
 	return currentNoDamageMultiplier;
 }

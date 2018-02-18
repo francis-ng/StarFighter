@@ -1,9 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Francis Ng 2017-2018
 
 #include "WeaponManagerComponent.h"
 
-
-// Sets default values for this component's properties
+/// Contructor for this component's properties
 UWeaponManagerComponent::UWeaponManagerComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -13,8 +12,7 @@ UWeaponManagerComponent::UWeaponManagerComponent()
 	// ...
 }
 
-
-// Called when the game starts
+/// BeginPlay override
 void UWeaponManagerComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -22,6 +20,7 @@ void UWeaponManagerComponent::BeginPlay()
 	InitializeWeaponManager();
 }
 
+/// Initialization of data for player weapons
 void UWeaponManagerComponent::InitializeWeaponManager()
 {	
 	auto weapons = GetOwner()->GetComponentsByClass(UWeaponComponent::StaticClass());
@@ -41,7 +40,7 @@ void UWeaponManagerComponent::InitializeWeaponManager()
 	obtainedWeapons[currentWeaponIndex] = true;
 }
 
-// Called every frame
+/// Tick override
 void UWeaponManagerComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -49,6 +48,7 @@ void UWeaponManagerComponent::TickComponent(float DeltaTime, ELevelTick TickType
 	// ...
 }
 
+/// Enable acquired weapon from pickup
 void UWeaponManagerComponent::AcquireWeapon(FString weaponName) {
 	for (auto& pair : weaponNameIndexMap) {
 		if (pair.Value->GetName() == weaponName) {
@@ -58,6 +58,7 @@ void UWeaponManagerComponent::AcquireWeapon(FString weaponName) {
 	}
 }
 
+/// Switch to next weapon
 void UWeaponManagerComponent::CycleNextWeapon()
 {
 	currentWeaponIndex = (currentWeaponIndex + 1) % numberOfWeapons;
@@ -70,6 +71,7 @@ void UWeaponManagerComponent::CycleNextWeapon()
 	}
 }
 
+/// Switch to previous weapon
 void UWeaponManagerComponent::CyclePreviousWeapon()
 {
 	currentWeaponIndex = (currentWeaponIndex - 1) < 0 ? numberOfWeapons - 1 : currentWeaponIndex - 1;
@@ -82,11 +84,13 @@ void UWeaponManagerComponent::CyclePreviousWeapon()
 	}
 }
 
+/// Fire currently selected weapon
 void UWeaponManagerComponent::FireCurrentWeapon(bool toFire)
 {
 	currentWeapon->SetFiring(toFire);
 }
 
+/// Return the currently selected weapon
 FString UWeaponManagerComponent::GetCurrentWeapon() const {
 	return currentWeapon->GetName();
 }
