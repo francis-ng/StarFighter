@@ -41,7 +41,7 @@ FTimeComponents UHelperFunctionLibrary::GameTimeToTime(float GameTime) {
 
 /// Find the closest enemy to the player
 AShip* UHelperFunctionLibrary::FindNearestEnemy(UObject* WorldContextObject) {
-	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
+	UWorld* World = GEngine->GetWorldFromContextObjectChecked(WorldContextObject);
 	APawn* playerShip = World->GetFirstPlayerController()->GetPawn();
 	if (!playerShip) {
 		UE_LOG(LogTemp, Error, TEXT("Cannot find player ship from world"), )
@@ -90,7 +90,7 @@ float UHelperFunctionLibrary::GetShieldAsPercentage(AShip* ship) {
 
 /// Check if a boss actor is present in a level
 bool UHelperFunctionLibrary::BossExists(UObject* WorldContextObject) {
-	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
+	UWorld* World = GEngine->GetWorldFromContextObjectChecked(WorldContextObject);
 	UClass* BossClass = FindObject<UClass>(ANY_PACKAGE, TEXT("/Game/Blueprints/Ships/EnemyBoss.EnemyBoss_C"));
 	if (BossClass && World) {
 		for (TActorIterator<AShip> EnemyItr(World); EnemyItr; ++EnemyItr) {

@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Munition.h"
 #include "Ship.h"
-#include "Utilities.h"
 #include "EngineUtils.h"
 #include "Engine/World.h"
 #include "GameFramework/Pawn.h"
