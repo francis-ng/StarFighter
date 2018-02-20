@@ -101,3 +101,8 @@ bool UHelperFunctionLibrary::BossExists(UObject* WorldContextObject) {
 	}
 	return false;
 }
+
+/// Change localization of game
+void UHelperFunctionLibrary::SetLocale(FString locale) {
+	FInternationalization::Get().SetCurrentCulture(locale);
+}

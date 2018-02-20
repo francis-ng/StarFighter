@@ -50,4 +50,6 @@ public:
 	static float GetShieldAsPercentage(AShip* ship);
 	UFUNCTION(BlueprintCallable, Category = "BossHelpers", meta = (WorldContext = "WorldContextObject"))
 	static bool BossExists(UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "LocalizationHelpers", meta = (WorldContext = "WorldContextObject"))
+	static void SetLocale(FString locale);
 };
