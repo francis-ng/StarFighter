@@ -12,7 +12,7 @@
 
 /// Ship AI controller base class
 UCLASS()
-class PROJECTCH_API AShipAIController : public AAIController
+class STARFIGHTER_API AShipAIController : public AAIController
 {
 	GENERATED_BODY()
 	

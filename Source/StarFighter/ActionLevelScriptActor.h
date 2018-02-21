@@ -40,7 +40,7 @@ static const FString ContextString(TEXT("GENERAL"));
 
 /// Gameplay level class
 UCLASS()
-class PROJECTCH_API AActionLevelScriptActor : public ALevelScriptActor
+class STARFIGHTER_API AActionLevelScriptActor : public ALevelScriptActor
 {
 	GENERATED_UCLASS_BODY()
 	

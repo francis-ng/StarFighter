@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class ProjectCH : ModuleRules
+public class StarFighter : ModuleRules
 {
-	public ProjectCH(ReadOnlyTargetRules Target) : base(Target)
+	public StarFighter(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	

@@ -12,7 +12,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWeaponChangedEvent, UTexture2D*, Te
 
 /// Weapon manager component base class (management of player weapons)
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class PROJECTCH_API UWeaponManagerComponent : public UActorComponent
+class STARFIGHTER_API UWeaponManagerComponent : public UActorComponent
 {
 	GENERATED_BODY()
 

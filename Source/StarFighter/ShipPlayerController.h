@@ -13,7 +13,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPawnPossessedEvent);
 
 /// Ship player controller base class
 UCLASS()
-class PROJECTCH_API AShipPlayerController : public APlayerController
+class STARFIGHTER_API AShipPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	

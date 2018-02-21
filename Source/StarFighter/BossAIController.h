@@ -32,7 +32,7 @@ static const FString ContextString(TEXT("GENERAL"));
 
 /// AI Controller for boss
 UCLASS()
-class PROJECTCH_API ABossAIController : public AAIController
+class STARFIGHTER_API ABossAIController : public AAIController
 {
 	GENERATED_UCLASS_BODY()
 	

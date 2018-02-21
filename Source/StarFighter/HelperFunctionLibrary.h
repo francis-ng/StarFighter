@@ -30,7 +30,7 @@ struct FTimeComponents {
 
 /// Helper functions class
 UCLASS()
-class PROJECTCH_API UHelperFunctionLibrary : public UBlueprintFunctionLibrary
+class STARFIGHTER_API UHelperFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 	

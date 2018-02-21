@@ -11,7 +11,7 @@
 
 /// Weapon component base class
 UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class PROJECTCH_API UWeaponComponent : public UActorComponent
+class STARFIGHTER_API UWeaponComponent : public UActorComponent
 {
 	GENERATED_BODY()
 

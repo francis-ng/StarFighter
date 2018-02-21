@@ -10,7 +10,7 @@
 
 /// Ammunition base class
 UCLASS()
-class PROJECTCH_API AMunition : public APawn
+class STARFIGHTER_API AMunition : public APawn
 {
 	GENERATED_BODY()
 

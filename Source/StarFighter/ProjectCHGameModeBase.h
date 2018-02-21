@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class PROJECTCH_API AProjectCHGameModeBase : public AGameModeBase
+class STARFIGHTER_API AProjectCHGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	

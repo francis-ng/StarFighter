@@ -11,7 +11,7 @@
 
 /// Component for firing the energy burst
 UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class PROJECTCH_API UEnergyBurstComponent : public UActorComponent
+class STARFIGHTER_API UEnergyBurstComponent : public UActorComponent
 {
 	GENERATED_BODY()
 

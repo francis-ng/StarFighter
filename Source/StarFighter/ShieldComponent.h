@@ -11,7 +11,7 @@
 
 /// Energy barrier base component
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class PROJECTCH_API UShieldComponent : public UActorComponent
+class STARFIGHTER_API UShieldComponent : public UActorComponent
 {
 	GENERATED_BODY()
 

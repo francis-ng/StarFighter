@@ -9,7 +9,7 @@
 
 /// Fire and forget projectile base class
 UCLASS()
-class PROJECTCH_API ALinearProjectile : public AMunition
+class STARFIGHTER_API ALinearProjectile : public AMunition
 {
 	GENERATED_BODY()
 	

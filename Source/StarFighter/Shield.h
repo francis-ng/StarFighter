@@ -11,7 +11,7 @@
 
 /// Energy barrier base class
 UCLASS()
-class PROJECTCH_API AShield : public AActor
+class STARFIGHTER_API AShield : public AActor
 {
 	GENERATED_BODY()
 	

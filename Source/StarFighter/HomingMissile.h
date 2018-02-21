@@ -13,7 +13,7 @@
 
 /// Homing missile base class
 UCLASS()
-class PROJECTCH_API AHomingMissile : public AMunition
+class STARFIGHTER_API AHomingMissile : public AMunition
 {
 	GENERATED_BODY()
 	

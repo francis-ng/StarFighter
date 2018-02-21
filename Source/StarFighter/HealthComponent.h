@@ -20,7 +20,7 @@ enum class EDamageLevelEnum : uint8 {
 
 /// Health component class
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class PROJECTCH_API UHealthComponent : public UActorComponent
+class STARFIGHTER_API UHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
 

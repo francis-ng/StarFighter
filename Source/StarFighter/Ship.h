@@ -11,7 +11,7 @@
 
 /// Ship base class
 UCLASS(Blueprintable)
-class PROJECTCH_API AShip : public APawn
+class STARFIGHTER_API AShip : public APawn
 {
 	GENERATED_BODY()
 

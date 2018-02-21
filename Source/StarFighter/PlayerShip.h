@@ -12,7 +12,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMultiplierUpdateEvent, float, Multi
 
 /// Player ship base class
 UCLASS()
-class PROJECTCH_API APlayerShip : public AShip
+class STARFIGHTER_API APlayerShip : public AShip
 {
 	GENERATED_BODY()
 	
